@@ -21,9 +21,10 @@ jobs:
       with:
         files: '/home/runner/work/ClimbingBot/ClimbingBot/deploy/appsettings.json'
       env:
-        DbConnectionString: ${{ secrets.APP_DB_CONNTECTION_STRING }}
-        Telegram.ApiKey: ${{ secrets.APP_TELEGRAM_API_KEY }}
-        Telegram.LogChatId: ${{ secrets.APP_TELEGRAM_LOGCHAT_ID }}
+        DbConnectionString: ${{ secrets.DB_CONNTECTION_STRING }}
+        Telegram.ApiKey: ${{ secrets.TELEGRAM_API_KEY }}
+        Telegram.LogChatId: ${{ secrets.TELEGRAM_LOGCHAT_ID }}
+        Serilog.File.Path: ${{ secrets.LOG_PATH }}
         
     - name: Copy via ssh
       uses: garygrossgarten/github-action-scp@v0.5.3
