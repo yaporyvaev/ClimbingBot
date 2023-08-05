@@ -10,11 +10,11 @@ using Telegram.Bot.Types;
 
 namespace ClimbingBot.Telegram.BotCommands
 {
-    public class HelloCommand : BaseCommand
+    public class GoodbyeCommand : BaseCommand
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public HelloCommand(IServiceProvider serviceProvider)
+        public GoodbyeCommand(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
@@ -24,22 +24,19 @@ namespace ClimbingBot.Telegram.BotCommands
             using var serviceScope = _serviceProvider.CreateScope();
             var repository = serviceScope.ServiceProvider.GetService<IRepository<TelegramGroup>>();
             
-            var groupExists = repository.GetAll()
-                .Any(s => s.GroupId == message.Chat.Id);
+            var group = repository.GetAll()
+                .FirstOrDefault(s => s.GroupId == message.Chat.Id);
 
-            if (groupExists)
+            if (group == null)
             {
-                return await Task.FromResult(new CommandState(BotCommandsTypes.Hello, message.From!.Id, 
-                    new FinishCommandHandlingState("I've already known this group")));
+                return await Task.FromResult(new CommandState(BotCommandsTypes.Goodbye, message.From!.Id,
+                    new FinishCommandHandlingState("I don't known this group yet")));
             }
 
-            await repository.Add(new TelegramGroup
-            {
-                GroupId = message.Chat.Id
-            });
-            
-            return await Task.FromResult(new CommandState(BotCommandsTypes.Hello, message.From!.Id, 
-                new FinishCommandHandlingState("Hello there!")));
+            await repository.Remove(group);
+                
+            return await Task.FromResult(new CommandState(BotCommandsTypes.Goodbye, message.From!.Id, 
+                new FinishCommandHandlingState("Goodbye :<")));
         }
     }
 }

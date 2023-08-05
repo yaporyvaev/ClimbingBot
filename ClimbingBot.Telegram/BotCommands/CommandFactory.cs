@@ -18,6 +18,7 @@ namespace ClimbingBot.Telegram.BotCommands
             return commandType switch
             {
                 BotCommandsTypes.Hello => _serviceProvider.GetService<HelloCommand>(),
+                BotCommandsTypes.Goodbye => _serviceProvider.GetService<GoodbyeCommand>(),
                 BotCommandsTypes.Poll => _serviceProvider.GetService<CreatePollCommand>(),
                 _ => null
             };

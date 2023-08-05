@@ -26,6 +26,7 @@ namespace ClimbingBot.Telegram
             serviceCollection.AddTransient(_ => new TelegramBotClient(settings.TelegramBotApiKey));
             
             serviceCollection.AddTransient<HelloCommand>();
+            serviceCollection.AddTransient<GoodbyeCommand>();
             serviceCollection.AddTransient<CreatePollCommand>();
 
             serviceCollection.AddSingleton<CommandStateStore>();
