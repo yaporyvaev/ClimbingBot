@@ -36,7 +36,7 @@ namespace ClimbingBot.Telegram.BotCommands
             await repository.Remove(group);
                 
             return await Task.FromResult(new CommandState(BotCommandsTypes.Goodbye, message.From!.Id, 
-                new FinishCommandHandlingState("Goodbye :<")));
+                new FinishCommandHandlingState("Goodbye :(")));
         }
     }
 }
